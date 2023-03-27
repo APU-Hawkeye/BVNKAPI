@@ -1,0 +1,20 @@
+{
+    "name": "swarup/bvnkapi",
+    "description": "bvnk api for exchange rate of fiat and crypto currency",
+    "type": "libraryi",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Hawkeye",
+            "email": "swarup@agpaytech.co.uk"
+        }
+    ],
+    "require": {
+        "guzzlehttp/guzzle": "^7.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "APUHawkeye\\BVNKAPI\\": "src/"
+        }
+    }
+}
