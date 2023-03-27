@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace APUHawkeye\BVNKAPI\Service\BVNK;
 
 use APUHawkeye\BVNKAPI\Service\ExchangeRateInterface;
-use APUHawkeye\BVNKAPI\Service\Model\ExchangeRate;
 use GuzzleHttp\Client;
 use GuzzleHttp\Psr7\Response;
 
@@ -85,7 +84,7 @@ class Bvnk implements ExchangeRateInterface
     {
         $client = new Client();
         $header = $this->generateHeader();
-        $endpoint = self::BASE_URI . '/api/currency/convert/' . $sourceCurrency . '?all=true';
+        $endpoint = self::BASE_URI . '/api/currency/values/' . $sourceCurrency . '?all=true';
         /** @var Response $response */
         $response = $client->request('GET', $endpoint, [
             'Authorization' => $header
@@ -109,7 +108,7 @@ class Bvnk implements ExchangeRateInterface
     {
         $client = new Client();
         $header = $this->generateHeader();
-        $endpoint = self::BASE_URI . '/api/currency/convert/' . $sourceCurrency . '/' . $counterCurrency . '?amount='. $amount;
+        $endpoint = self::BASE_URI . '/api/currency/convert/' . $sourceCurrency . '/' . $counterCurrency . '?amount='. $sourceAmount;
         /** @var Response $response */
         $response = $client->request('GET', $endpoint, [
             'Authorization' => $header
