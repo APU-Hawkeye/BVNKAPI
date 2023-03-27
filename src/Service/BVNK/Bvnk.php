@@ -78,14 +78,14 @@ class Bvnk implements ExchangeRateInterface
 
     /**
      * @param string $sourceCurrency
-     * @return ExchangeRate
+     * @return array
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
-    public function exchangeRate(string $sourceCurrency): ExchangeRate
+    public function exchangeRate(string $sourceCurrency): array
     {
         $client = new Client();
         $header = $this->generateHeader();
-        $endpoint = self::BASE_URI . '/api/currency/values/' . $sourceCurrency . '?all=true' ;
+        $endpoint = self::BASE_URI . '/api/currency/convert/' . $sourceCurrency . '?all=true';
         /** @var Response $response */
         $response = $client->request('GET', $endpoint, [
             'Authorization' => $header
@@ -93,15 +93,33 @@ class Bvnk implements ExchangeRateInterface
         if ($response->getStatusCode() ===  200) {
             /** @var array $responseBody */
             $responseBody = json_decode($response->getBody()->getContents(), true);
-            foreach ($responseBody as $body) {
-                $exchangeRate = new ExchangeRate();
-                $exchangeRate->setBaseCurrency($sourceCurrency);
-                $exchangeRate->setCounterCurrency( $body['counterCode']);
-                $exchangeRate->setExchangeRate($body['rate']);
 
-            }
+            return $responseBody;
+        }
+    }
 
-            return $exchangeRate;
+    /**
+     * @param string $sourceCurrency
+     * @param string $counterCurrency
+     * @param float $sourceAmount
+     * @return float
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     */
+    public function covertAmount(string $sourceCurrency, string $counterCurrency, float $sourceAmount): float
+    {
+        $client = new Client();
+        $header = $this->generateHeader();
+        $endpoint = self::BASE_URI . '/api/currency/convert/' . $sourceCurrency . '/' . $counterCurrency . '?amount='. $amount;
+        /** @var Response $response */
+        $response = $client->request('GET', $endpoint, [
+            'Authorization' => $header
+        ]);
+        if ($response->getStatusCode() ===  200) {
+            /** @var array $responseBody */
+            $responseBody = json_decode($response->getBody()->getContents(), true);
+            $value = $responseBody['value'];
+
+            return $value;
         }
     }
 }
