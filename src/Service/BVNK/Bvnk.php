@@ -79,8 +79,6 @@ class Bvnk implements ExchangeRateInterface
 
     public function exchangeRate(string $sourceCurrency): array
     {
-        $exchangeRate = new ExchangeRate();
-        $exchangeRate->setBaseCurrency($sourceCurrency);
         $client = new Client();
         $header = $this->generateHeader();
         $endpoint = self::BASE_URI . '/api/currency/values/' . $sourceCurrency . '?all=true' ;
