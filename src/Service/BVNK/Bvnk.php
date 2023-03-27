@@ -77,27 +77,27 @@ class Bvnk implements ExchangeRateInterface
     }
 
 
-    public function exchangeRate(string $sourceCurrency): array
+    public function exchangeRate(string $sourceCurrency): ExchangeRate
     {
         $client = new Client();
         $header = $this->generateHeader();
         $endpoint = self::BASE_URI . '/api/currency/values/' . $sourceCurrency . '?all=true' ;
         /** @var Response $response */
         $response = $client->request('GET', $endpoint, [
-            'headers' => $header
+            'Authorization' => $header
         ]);
         if ($response->getStatusCode() ===  200) {
             /** @var array $responseBody */
             $responseBody = json_decode($response->getBody()->getContents(), true);
             foreach ($responseBody as $body) {
                 $exchangeRate = new ExchangeRate();
-                $exchangeRate->setBaseCurrency($sourceCurrency);
-                $exchangeRate->setCounterCurrency($body['counterCode']);
+                $exchangeRate->setBaseCurrency($body['baseCode']);
+                $exchangeRate->setCounterCurrency( $body['counterCode']);
                 $exchangeRate->setExchangeRate($body['rate']);
 
             }
 
-            return $responseBody;
+            return $exchangeRate;
         }
     }
 }
