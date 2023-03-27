@@ -94,7 +94,10 @@ class Bvnk implements ExchangeRateInterface
                 $exchangeRate->setBaseCurrency($sourceCurrency);
                 $exchangeRate->setCounterCurrency($body['counterCode']);
                 $exchangeRate->setExchangeRate($body['rate']);
+
             }
+
+            return $responseBody;
         }
     }
 }
