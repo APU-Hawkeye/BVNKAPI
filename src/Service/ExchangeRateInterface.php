@@ -5,5 +5,5 @@ namespace APUHawkeye\BVNKAPI\Service;
 
 interface ExchangeRateInterface
 {
-    public function exchangeRate(string $sourceCurrency): \APUHawkeye\BVNKAPI\Service\Model\ExchangeRate;
+    public function exchangeRate(string $sourceCurrency): array;
 }
