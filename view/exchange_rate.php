@@ -2,13 +2,10 @@
 
 require_once "../vendor/autoload.php";
 
-$exchangeRate = new \APUHawkeye\BVNKAPI\Service\BVNK\Bvnk();
+$bvnk = new \APUHawkeye\BVNKAPI\Service\BVNK\Bvnk();
 
 try {
-    $rate = $exchangeRate->exchangeRate('BTC');
+    $rate = $bvnk->exchangeRate('BTC', 'INR', 1);
+    $amount = $bvnk->covertAmount('GBP', 'BTC', 1500);
 } catch (\GuzzleHttp\Exception\GuzzleException $e) {
 }
-
-echo '<pre>';
-
-print_r($rate);
