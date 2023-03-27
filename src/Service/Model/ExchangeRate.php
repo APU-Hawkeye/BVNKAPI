@@ -7,7 +7,9 @@ class ExchangeRate
 {
     protected ?string $_exchangeRate;
 
-    protected ?string $_toCurrency;
+    protected ?string $_baseCurrency;
+
+    protected ?string $_counterCurrency;
 
     /**
      * @return string
@@ -29,18 +31,35 @@ class ExchangeRate
     /**
      * @return string
      */
-    public function getToCurrency(): string
+    public function getBaseCurrency(): string
     {
-        return $this->_toCurrency;
+        return $this->_baseCurrency;
     }
 
     /**
-     * @param string|null $toCurrency
+     * @param string|null $baseCurrency
      * @return void
      */
-    public function setToCurrency(?string $toCurrency): void
+    public function setBaseCurrency(?string $baseCurrency): void
     {
-        $this->_toCurrency = $toCurrency;
+        $this->_baseCurrency = $baseCurrency;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCounterCurrency(): string
+    {
+        return $this->_counterCurrency;
+    }
+
+    /**
+     * @param string|null $counterCurrency
+     * @return void
+     */
+    public function setCounterCurrency(?string $counterCurrency): void
+    {
+        $this->_counterCurrency = $counterCurrency;
     }
 
 }
