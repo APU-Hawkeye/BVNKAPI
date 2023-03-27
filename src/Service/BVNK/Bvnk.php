@@ -76,7 +76,11 @@ class Bvnk implements ExchangeRateInterface
         return $header;
     }
 
-
+    /**
+     * @param string $sourceCurrency
+     * @return ExchangeRate
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     */
     public function exchangeRate(string $sourceCurrency): ExchangeRate
     {
         $client = new Client();
@@ -91,7 +95,7 @@ class Bvnk implements ExchangeRateInterface
             $responseBody = json_decode($response->getBody()->getContents(), true);
             foreach ($responseBody as $body) {
                 $exchangeRate = new ExchangeRate();
-                $exchangeRate->setBaseCurrency($body['baseCode']);
+                $exchangeRate->setBaseCurrency($sourceCurrency);
                 $exchangeRate->setCounterCurrency( $body['counterCode']);
                 $exchangeRate->setExchangeRate($body['rate']);
 
